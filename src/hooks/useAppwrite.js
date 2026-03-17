@@ -2,13 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 import { databases, storage, ID, Query } from '../lib/appwrite';
 import { DATABASE_ID, BUCKET_ID, COLLECTIONS, DEFAULT_DATA } from '../lib/appwriteConfig';
 
-// Check if Appwrite is configured
 const isAppwriteConfigured = () => {
   const projectId = import.meta.env.VITE_APPWRITE_PROJECT_ID;
   return projectId && projectId !== 'your_project_id_here';
 };
 
-// Get a file view URL from Appwrite Storage
 export function getFilePreviewUrl(fileId) {
   if (!fileId) return null;
   try {
@@ -18,7 +16,6 @@ export function getFilePreviewUrl(fileId) {
   }
 }
 
-// Get a file download URL from Appwrite Storage (forces browser download)
 export function getFileDownloadUrl(fileId) {
   if (!fileId) return null;
   try {
@@ -28,7 +25,6 @@ export function getFileDownloadUrl(fileId) {
   }
 }
 
-// Generic hook to fetch a collection
 export function useCollection(collectionKey) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +35,6 @@ export function useCollection(collectionKey) {
 
   const fetchData = useCallback(async () => {
     if (!isAppwriteConfigured()) {
-      // Use default data when Appwrite is not configured
       const defaults = DEFAULT_DATA[
         defaultKey === 'personal' ? 'personal' :
         defaultKey === 'experiences' ? 'experiences' :
@@ -60,7 +55,6 @@ export function useCollection(collectionKey) {
       if (response.documents.length > 0) {
         setData(response.documents);
       } else {
-        // Fallback to defaults if collection is empty
         const defaults = DEFAULT_DATA[defaultKey];
         setData(Array.isArray(defaults) ? defaults : [defaults]);
       }
@@ -81,7 +75,6 @@ export function useCollection(collectionKey) {
   return { data, loading, error, refetch: fetchData };
 }
 
-// Hook for personal info (single document)
 export function usePersonalInfo() {
   const [data, setData] = useState(DEFAULT_DATA.personal);
   const [loading, setLoading] = useState(true);
@@ -118,7 +111,6 @@ export function usePersonalInfo() {
   return { data, loading, error, refetch: fetchData };
 }
 
-// CRUD operations for admin
 export function useAdminCRUD(collectionKey) {
   const collectionId = COLLECTIONS[collectionKey];
 
@@ -166,7 +158,6 @@ export function useAdminCRUD(collectionKey) {
   return { createDocument, updateDocument, deleteDocument };
 }
 
-// File upload hook
 export function useFileUpload() {
   const uploadFile = async (file) => {
     try {
@@ -201,7 +192,6 @@ export function useFileUpload() {
   return { uploadFile, getFilePreview, getFileDownload, deleteFile };
 }
 
-// Submit a contact form message (anonymous - no auth required)
 export function useSubmitMessage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -244,7 +234,6 @@ export function useSubmitMessage() {
   return { submitMessage, submitting, error, success, reset };
 }
 
-// Fetch all messages (admin only)
 export function useMessages() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);

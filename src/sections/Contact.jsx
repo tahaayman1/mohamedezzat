@@ -66,7 +66,6 @@ export default function Contact({ data }) {
         <SectionTitle subtitle="Let's Connect" title="Get In Touch" />
 
         <div className="grid lg:grid-cols-2 gap-14 max-w-5xl">
-          {/* Left - Contact info + links */}
           <div>
             <AnimatedSection variant="fadeLeft">
               <p className="text-lg text-white/70 leading-relaxed mb-5">
@@ -120,7 +119,6 @@ export default function Contact({ data }) {
             </div>
           </div>
 
-          {/* Right - Contact form */}
           <AnimatedSection variant="fadeRight" delay={0.15}>
             <form onSubmit={handleSubmit} className="glass-accent p-6 sm:p-8 space-y-5">
               <h3 className="text-lg font-semibold text-white/90 mb-2">Send a Message</h3>
@@ -190,7 +188,6 @@ export default function Contact({ data }) {
                 />
               </div>
 
-              {/* Success message */}
               {success && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
@@ -212,7 +209,6 @@ export default function Contact({ data }) {
                 </motion.div>
               )}
 
-              {/* Error message */}
               {error && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
@@ -255,7 +251,6 @@ export default function Contact({ data }) {
           </AnimatedSection>
         </div>
 
-        {/* Footer */}
         <motion.footer
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -263,7 +258,6 @@ export default function Contact({ data }) {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="mt-24 pt-10 border-t border-white/[0.10]"
         >
-          {/* Mohamed's social icons */}
           <div className="flex items-center justify-center gap-3 mb-8">
             <a
               href={LINKEDIN_URL}
@@ -290,12 +284,10 @@ export default function Contact({ data }) {
             </a>
           </div>
 
-          {/* Copyright */}
           <p className="text-center text-white/50 text-sm mb-6">
             &copy; {new Date().getFullYear()} Mohamed Ezzat. All rights reserved.
           </p>
 
-          {/* Developer credit */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 pt-5 border-t border-white/[0.06]">
             <div className="flex items-center gap-1.5 text-white/45 text-sm">
               <HiCode size={14} className="text-white/40" />

@@ -47,7 +47,6 @@
 
 @layer components {
 
-  /* ── Noise texture overlay ── */
   .noise-overlay {
     position: fixed;
     inset: 0;
@@ -59,7 +58,6 @@
     background-size: 128px 128px;
   }
 
-  /* ── Glass card ── */
   .glass {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -74,7 +72,6 @@
     transform: translateY(-2px);
   }
 
-  /* Glass card with left accent */
   .glass-accent {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -91,7 +88,6 @@
     transform: translateY(-2px);
   }
 
-  /* ── Floating glass navbar pill ── */
   .glass-nav {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.07);
@@ -99,7 +95,6 @@
     -webkit-backdrop-filter: blur(24px) saturate(1.4);
   }
 
-  /* ── Section divider ── */
   .section-divider {
     height: 1px;
     max-width: 60px;
@@ -107,7 +102,6 @@
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
   }
 
-  /* ── Accent line ── */
   .accent-line {
     width: 32px;
     height: 2px;
@@ -115,7 +109,6 @@
     border-radius: 1px;
   }
 
-  /* ── Buttons ── */
   .btn-primary {
     @apply inline-flex items-center gap-2.5 px-8 py-3.5 font-semibold text-sm rounded-full
            transition-all duration-300 active:scale-[0.97];
@@ -140,7 +133,6 @@
     background: rgba(255, 255, 255, 0.04);
   }
 
-  /* ── Skill tag ── */
   .skill-tag {
     @apply px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300;
     background: rgba(255, 255, 255, 0.04);
@@ -154,7 +146,6 @@
     transform: translateY(-1px);
   }
 
-  /* ── Gradient mesh (hero background) ── */
   .mesh-gradient {
     position: absolute;
     inset: 0;
@@ -209,7 +200,6 @@
     75% { transform: translate(-5%, 10%) scale(1); }
   }
 
-  /* ── Admin styles (unchanged) ── */
   .admin-input {
     @apply w-full px-4 py-3 rounded-lg text-white placeholder-white/30 focus:outline-none transition-all duration-300;
     background: #0a0a0a;

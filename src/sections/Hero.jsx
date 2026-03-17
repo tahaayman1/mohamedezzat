@@ -20,14 +20,12 @@ export default function Hero({ data }) {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-20 lg:pt-28 lg:pb-16"
     >
-      {/* Animated gradient mesh background */}
       <div className="mesh-gradient">
         <div className="mesh-blob mesh-blob-1" />
         <div className="mesh-blob mesh-blob-2" />
         <div className="mesh-blob mesh-blob-3" />
       </div>
 
-      {/* Faint grid */}
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
@@ -37,22 +35,18 @@ export default function Hero({ data }) {
         }}
       />
 
-      {/* Radial fade from center */}
       <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/60" />
 
       <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-8 w-full">
         <div className="flex flex-col items-center text-center gap-0">
 
-          {/* Profile image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="relative mb-5 lg:mb-6"
           >
-            {/* Animated outer glow ring */}
             <div className="absolute -inset-4 rounded-full bg-gradient-to-b from-white/10 via-white/5 to-transparent blur-xl animate-pulse" style={{ animationDuration: '4s' }} />
-            {/* Inner subtle ring */}
             <div className="absolute -inset-1 rounded-full bg-gradient-to-b from-white/8 to-transparent blur-sm" />
             <div className="relative w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-40 lg:h-40 rounded-full overflow-hidden ring-1 ring-white/20 shadow-2xl shadow-white/5">
               <img
@@ -63,7 +57,6 @@ export default function Hero({ data }) {
             </div>
           </motion.div>
 
-          {/* Role badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -75,7 +68,6 @@ export default function Hero({ data }) {
             </span>
           </motion.div>
 
-          {/* Name - cinematic typography */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -88,7 +80,6 @@ export default function Hero({ data }) {
             </span>
           </motion.h1>
 
-          {/* Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -98,7 +89,6 @@ export default function Hero({ data }) {
             Helping businesses grow through strategic development and digital innovation.
           </motion.p>
 
-          {/* Thin separator */}
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
@@ -106,7 +96,6 @@ export default function Hero({ data }) {
             className="w-12 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent mb-6 lg:mb-6"
           />
 
-          {/* CTAs + LinkedIn */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -133,7 +122,6 @@ export default function Hero({ data }) {
         </div>
       </div>
 
-      {/* Scroll down indicator - positioned above the fade zone */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -152,7 +140,6 @@ export default function Hero({ data }) {
         </motion.div>
       </motion.div>
 
-      {/* Bottom fade - shorter so it doesn't cover scroll indicator */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent pointer-events-none z-0" />
     </section>
   );

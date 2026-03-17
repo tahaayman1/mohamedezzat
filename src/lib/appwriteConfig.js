@@ -1,6 +1,3 @@
-// Appwrite Database & Collection IDs
-// These must match what you create in your Appwrite Console
-
 export const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID || 'portfolio_db';
 export const BUCKET_ID = import.meta.env.VITE_APPWRITE_BUCKET_ID || 'portfolio_files';
 
@@ -14,7 +11,6 @@ export const COLLECTIONS = {
   MESSAGES: import.meta.env.VITE_APPWRITE_COLLECTION_MESSAGES || 'messages',
 };
 
-// Default data - used when Appwrite is not configured or data hasn't been loaded yet
 export const DEFAULT_DATA = {
   personal: {
     name: 'Mohamed Ezzat',

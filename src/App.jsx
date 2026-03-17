@@ -10,14 +10,9 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Public portfolio */}
           <Route path="/" element={<Portfolio />} />
-
-          {/* Admin routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
-
-          {/* 404 catch-all */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

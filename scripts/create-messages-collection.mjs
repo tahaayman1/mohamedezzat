@@ -1,15 +1,3 @@
-/**
- * Create the "messages" collection in Appwrite for the contact form.
- *
- * Usage:
- *   node scripts/create-messages-collection.mjs YOUR_API_KEY
- *
- * Get an API key from: Appwrite Console > Project Settings > API Keys
- * The key needs permissions: databases.read, databases.write, collections.read, collections.write
- *
- * After running, you can delete this script and revoke the API key.
- */
-
 import { Client, Databases, Permission, Role } from 'node-appwrite';
 
 const ENDPOINT = 'https://nyc.cloud.appwrite.io/v1';
@@ -42,9 +30,7 @@ async function main() {
       COLLECTION_ID,
       'Messages',
       [
-        // Anyone can create (anonymous visitors submit contact form)
         Permission.create(Role.any()),
-        // Only authenticated users (admin) can read/update/delete
         Permission.read(Role.users()),
         Permission.update(Role.users()),
         Permission.delete(Role.users()),
@@ -59,7 +45,6 @@ async function main() {
     }
   }
 
-  // Create attributes
   const attributes = [
     { method: 'createStringAttribute', args: [DATABASE_ID, COLLECTION_ID, 'name', 255, true] },
     { method: 'createStringAttribute', args: [DATABASE_ID, COLLECTION_ID, 'email', 255, true] },
@@ -85,7 +70,6 @@ async function main() {
 
   console.log('');
   console.log('Done! The "messages" collection is ready.');
-  console.log('You can now delete this script and revoke the API key.');
 }
 
 main().catch((err) => {

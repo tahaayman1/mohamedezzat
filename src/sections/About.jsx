@@ -20,7 +20,6 @@ export default function About({ data }) {
         <SectionTitle subtitle="Get to know me" title="About Me" />
 
         <div className="grid lg:grid-cols-12 gap-14 lg:gap-20 items-start">
-          {/* Left column */}
           <div className="lg:col-span-7">
             <AnimatedSection variant="fadeLeft">
               <div className="flex items-center gap-5 mb-8">
@@ -65,7 +64,6 @@ export default function About({ data }) {
             </AnimatedSection>
           </div>
 
-          {/* Right column - glass stats */}
           <div className="lg:col-span-5">
             <AnimatedSection variant="fadeRight" delay={0.2}>
               <div className="glass-accent p-8">

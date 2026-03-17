@@ -16,14 +16,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
 
-  // Scroll detection
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Scroll-spy with IntersectionObserver
   useEffect(() => {
     const observers = [];
     const handleIntersect = (entries) => {
@@ -59,7 +57,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Floating glass pill navbar - centered */}
       <motion.div
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -74,7 +71,6 @@ export default function Navbar() {
           }`}
         >
           <div className="flex items-center gap-1">
-            {/* Logo */}
             <a
               href="#hero"
               className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white/[0.06] transition-colors duration-300"
@@ -87,7 +83,6 @@ export default function Navbar() {
               </span>
             </a>
 
-            {/* Desktop links */}
             <div className="hidden md:flex items-center">
               {navLinks.map((link) => (
                 <a
@@ -104,7 +99,6 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Mobile toggle */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden w-10 h-10 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-white/[0.06] transition-colors"
@@ -128,7 +122,6 @@ export default function Navbar() {
         </nav>
       </motion.div>
 
-      {/* Mobile fullscreen overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div

@@ -12,7 +12,6 @@ export default function Certificates({ data = [] }) {
           {data.map((cert, index) => (
             <AnimatedSection key={cert.$id || index} variant="scale" delay={index * 0.07}>
               <div className="glass p-7 h-full flex flex-col">
-                {/* Accent dot */}
                 <div className="w-1.5 h-1.5 rounded-full bg-white/30 mb-5" />
 
                 <h3 className="text-[15px] font-semibold text-white leading-snug flex-1 mb-4">

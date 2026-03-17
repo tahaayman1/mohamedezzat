@@ -23,7 +23,6 @@ export default function Portfolio() {
 
   return (
     <div className="relative bg-black min-h-screen">
-      {/* Subtle noise texture overlay */}
       <div className="noise-overlay" />
 
       <Navbar />

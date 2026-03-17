@@ -1,13 +1,3 @@
-/**
- * Add the "photo_id" attribute to the personal_info collection.
- *
- * Usage:
- *   node scripts/add-photo-id-attribute.mjs YOUR_API_KEY
- *
- * Get an API key from: Appwrite Console > Project Settings > API Keys
- * The key needs permissions: databases.read, databases.write, collections.read, collections.write
- */
-
 import { Client, Databases } from 'node-appwrite';
 
 const ENDPOINT = 'https://nyc.cloud.appwrite.io/v1';
@@ -37,10 +27,10 @@ async function main() {
       DATABASE_ID,
       COLLECTION_ID,
       'photo_id',
-      255,       // max length
-      false,     // required
-      '',        // default
-      false      // array
+      255,
+      false,
+      '',
+      false
     );
 
     console.log('photo_id attribute created successfully!');

@@ -28,7 +28,6 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-dark-950 flex items-center justify-center px-4">
-      {/* Background effects */}
       <div className="absolute inset-0 bg-gradient-radial from-primary-400/5 via-transparent to-transparent" />
       
       <motion.div
@@ -37,7 +36,6 @@ export default function AdminLogin() {
         transition={{ duration: 0.8 }}
         className="relative w-full max-w-md"
       >
-        {/* Back button */}
         <motion.a
           href="/"
           initial={{ opacity: 0, x: -20 }}
@@ -50,7 +48,6 @@ export default function AdminLogin() {
         </motion.a>
 
         <div className="glass-card p-8 md:p-10">
-          {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-heading font-bold text-gold-gradient mb-2">
               Admin Panel
@@ -60,7 +57,6 @@ export default function AdminLogin() {
             </p>
           </div>
 
-          {/* Error message */}
           {error && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -71,7 +67,6 @@ export default function AdminLogin() {
             </motion.div>
           )}
 
-          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="admin-label">Email Address</label>
@@ -118,22 +113,6 @@ export default function AdminLogin() {
               )}
             </button>
           </form>
-
-          {/* Setup instructions */}
-          <div className="mt-8 pt-6 border-t border-dark-600/50">
-            <p className="text-dark-400 text-xs text-center leading-relaxed">
-              To set up admin access, create an account in your{' '}
-              <a
-                href="https://cloud.appwrite.io"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-400 hover:text-primary-300 transition-colors"
-              >
-                Appwrite Console
-              </a>
-              {' '}under Authentication &gt; Users.
-            </p>
-          </div>
         </div>
       </motion.div>
     </div>

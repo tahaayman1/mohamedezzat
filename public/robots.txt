@@ -1,8 +1,6 @@
-# robots.txt - Mohamed Ezzat Portfolio
 User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin/login
 
-# Sitemap
 Sitemap: https://mohamedezzat.vercel.app/sitemap.xml

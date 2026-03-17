@@ -10,7 +10,6 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { usePersonalInfo, useCollection, useAdminCRUD, useFileUpload, useMessages, getFilePreviewUrl } from '../hooks/useAppwrite';
 
-// Sidebar navigation items
 const sidebarItems = [
   { id: 'personal', label: 'Personal Info', icon: HiUser },
   { id: 'education', label: 'Education', icon: HiAcademicCap },
@@ -51,7 +50,6 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-dark-950 flex">
-      {/* Mobile sidebar overlay */}
       <AnimatePresence>
         {sidebarOpen && (
           <motion.div
@@ -64,19 +62,16 @@ export default function AdminDashboard() {
         )}
       </AnimatePresence>
 
-      {/* Sidebar */}
       <aside
         className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-dark-900 border-r border-dark-700/50 flex flex-col transition-transform duration-300 lg:translate-x-0 ${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Logo area */}
         <div className="p-6 border-b border-dark-700/50">
           <h1 className="text-xl font-heading font-bold text-gold-gradient">Admin Panel</h1>
           <p className="text-dark-400 text-xs mt-1">Portfolio Management</p>
         </div>
 
-        {/* Nav items */}
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {sidebarItems.map((item) => (
             <button
@@ -97,7 +92,6 @@ export default function AdminDashboard() {
           ))}
         </nav>
 
-        {/* Bottom actions */}
         <div className="p-4 border-t border-dark-700/50 space-y-2">
           <Link
             to="/"
@@ -116,9 +110,7 @@ export default function AdminDashboard() {
         </div>
       </aside>
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col min-h-screen">
-        {/* Top bar */}
         <header className="bg-dark-900/50 backdrop-blur-sm border-b border-dark-700/50 px-4 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
@@ -141,7 +133,6 @@ export default function AdminDashboard() {
           </div>
         </header>
 
-        {/* Content area */}
         <main className="flex-1 p-4 lg:p-8 overflow-y-auto">
           <AnimatePresence mode="wait">
             <motion.div
@@ -166,10 +157,6 @@ export default function AdminDashboard() {
     </div>
   );
 }
-
-// ==========================================
-// Field definitions for each collection
-// ==========================================
 
 const educationFields = [
   { key: 'institution', label: 'Institution', type: 'text', placeholder: 'University name' },
@@ -203,10 +190,6 @@ const languageFields = [
   { key: 'level', label: 'Level (%)', type: 'number', placeholder: '100' },
   { key: 'order', label: 'Order', type: 'number', placeholder: '0' },
 ];
-
-// ==========================================
-// Personal Info Editor
-// ==========================================
 
 function PersonalInfoEditor() {
   const { data, loading, refetch } = usePersonalInfo();
@@ -339,7 +322,6 @@ function PersonalInfoEditor() {
           </div>
         </div>
 
-        {/* Profile Photo Upload */}
         <div>
           <label className="admin-label">Profile Photo</label>
           <div className="flex items-center gap-4">
@@ -390,10 +372,6 @@ function PersonalInfoEditor() {
   );
 }
 
-// ==========================================
-// Generic Collection Editor (CRUD)
-// ==========================================
-
 function CollectionEditor({ collectionKey, fields }) {
   const { data, loading, refetch } = useCollection(collectionKey);
   const { createDocument, updateDocument, deleteDocument } = useAdminCRUD(collectionKey);
@@ -433,7 +411,6 @@ function CollectionEditor({ collectionKey, fields }) {
     setSaving(true);
     setMessage('');
 
-    // Convert number fields
     const processedForm = { ...form };
     fields.forEach((f) => {
       if (f.type === 'number') {
@@ -476,7 +453,6 @@ function CollectionEditor({ collectionKey, fields }) {
 
   return (
     <div className="max-w-4xl space-y-6">
-      {/* Header with Add button */}
       <div className="flex items-center justify-between">
         <p className="text-dark-300 text-sm">{data.length} item(s)</p>
         <button onClick={startNew} className="admin-btn flex items-center gap-2 text-sm">
@@ -495,7 +471,6 @@ function CollectionEditor({ collectionKey, fields }) {
         </div>
       )}
 
-      {/* New item form */}
       <AnimatePresence>
         {showNew && (
           <motion.div
@@ -521,12 +496,10 @@ function CollectionEditor({ collectionKey, fields }) {
         )}
       </AnimatePresence>
 
-      {/* List of items */}
       <div className="space-y-4">
         {data.map((item) => (
           <div key={item.$id} className="admin-card">
             {editingId === item.$id ? (
-              /* Edit mode */
               <div>
                 <FormFields fields={fields} form={form} setForm={setForm} />
                 <div className="flex gap-3 mt-5">
@@ -540,7 +513,6 @@ function CollectionEditor({ collectionKey, fields }) {
                 </div>
               </div>
             ) : (
-              /* View mode */
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   {fields.map((field) => (
@@ -576,10 +548,6 @@ function CollectionEditor({ collectionKey, fields }) {
     </div>
   );
 }
-
-// ==========================================
-// Form Fields Component
-// ==========================================
 
 function FormFields({ fields, form, setForm }) {
   return (
@@ -620,10 +588,6 @@ function FormFields({ fields, form, setForm }) {
     </div>
   );
 }
-
-// ==========================================
-// Files Uploader
-// ==========================================
 
 function FilesUploader() {
   const { data: personalData, loading: personalLoading, refetch } = usePersonalInfo();
@@ -711,7 +675,6 @@ function FilesUploader() {
         </div>
       )}
 
-      {/* Profile Image Upload */}
       <div className="admin-card">
         <div className="flex items-center gap-4 mb-4">
           <div className="w-12 h-12 rounded-xl bg-primary-400/10 flex items-center justify-center">
@@ -723,7 +686,6 @@ function FilesUploader() {
           </div>
         </div>
 
-        {/* Current photo preview */}
         {currentPhotoUrl && (
           <div className="mb-4 flex items-center gap-3">
             <img
@@ -753,7 +715,6 @@ function FilesUploader() {
         )}
       </div>
 
-      {/* CV Upload */}
       <div className="admin-card">
         <div className="flex items-center gap-4 mb-4">
           <div className="w-12 h-12 rounded-xl bg-primary-400/10 flex items-center justify-center">
@@ -765,7 +726,6 @@ function FilesUploader() {
           </div>
         </div>
 
-        {/* Current CV info */}
         {currentCVUrl && (
           <div className="mb-4 flex items-center gap-3">
             <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
@@ -802,10 +762,6 @@ function FilesUploader() {
     </div>
   );
 }
-
-// ==========================================
-// Messages Viewer (Contact Form Submissions)
-// ==========================================
 
 function MessagesViewer() {
   const { data: messages, loading, error, markAsRead, deleteMessage } = useMessages();
@@ -846,7 +802,7 @@ function MessagesViewer() {
             <div>
               <h3 className="font-semibold">Failed to load messages</h3>
               <p className="text-sm text-red-400/70 mt-1">
-                Make sure the "messages" collection exists in Appwrite. Run the setup script:
+                Make sure the "messages" collection exists in Appwrite.
               </p>
               <code className="block text-xs mt-2 p-2 bg-dark-800 rounded">
                 node scripts/create-messages-collection.mjs YOUR_API_KEY
@@ -862,7 +818,6 @@ function MessagesViewer() {
 
   return (
     <div className="max-w-4xl space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <p className="text-dark-300 text-sm">
@@ -903,7 +858,6 @@ function MessagesViewer() {
               exit={{ opacity: 0, y: -10 }}
               className={`admin-card relative ${!msg.read ? 'border-l-2 border-l-blue-400' : ''}`}
             >
-              {/* Header row */}
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -933,13 +887,10 @@ function MessagesViewer() {
                 </div>
               </div>
 
-              {/* Subject */}
               <p className="text-white/70 text-sm font-medium mb-2">{msg.subject}</p>
 
-              {/* Message body */}
               <p className="text-dark-300 text-sm leading-relaxed whitespace-pre-wrap">{msg.message}</p>
 
-              {/* Timestamp */}
               <p className="text-dark-500 text-xs mt-3">
                 {msg.createdAt ? new Date(msg.createdAt).toLocaleString() : 'Unknown date'}
               </p>
@@ -950,10 +901,6 @@ function MessagesViewer() {
     </div>
   );
 }
-
-// ==========================================
-// Loading State
-// ==========================================
 
 function LoadingState() {
   return (
