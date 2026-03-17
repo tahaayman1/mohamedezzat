@@ -1,6 +1,7 @@
 import { AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import SkeletonLoader from '../components/SkeletonLoader';
+import ConsultationChat from '../components/ConsultationChat';
 import Hero from '../sections/Hero';
 import About from '../sections/About';
 import Education from '../sections/Education';
@@ -9,7 +10,7 @@ import Certificates from '../sections/Certificates';
 import Skills from '../sections/Skills';
 import Languages from '../sections/Languages';
 import Contact from '../sections/Contact';
-import { usePersonalInfo, useCollection, useSectionTitles } from '../hooks/useAppwrite';
+import { usePersonalInfo, useCollection, useSectionTitles, useSubmitMessage } from '../hooks/useAppwrite';
 
 export default function Portfolio() {
   const { data: personalInfo, loading: personalLoading } = usePersonalInfo();
@@ -19,6 +20,7 @@ export default function Portfolio() {
   const { data: skills, loading: skillsLoading } = useCollection('SKILLS');
   const { data: languages, loading: langLoading } = useCollection('LANGUAGES');
   const { data: sectionTitles, loading: titlesLoading } = useSectionTitles();
+  const { submitMessage } = useSubmitMessage();
 
   const isLoading = personalLoading || eduLoading || expLoading || certLoading || skillsLoading || langLoading || titlesLoading;
 
@@ -72,6 +74,9 @@ export default function Portfolio() {
           </main>
         )}
       </AnimatePresence>
+
+      {/* Floating consultation chatbot */}
+      <ConsultationChat onSubmit={submitMessage} />
     </div>
   );
 }
