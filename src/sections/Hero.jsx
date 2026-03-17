@@ -52,6 +52,9 @@ export default function Hero({ data }) {
               <img
                 src={profileImg}
                 alt={data?.name || 'Mohamed Ezzat'}
+                width={176}
+                height={176}
+                fetchPriority="high"
                 className="w-full h-full object-cover object-center"
               />
             </div>

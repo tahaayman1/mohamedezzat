@@ -24,7 +24,7 @@ export default function About({ data }) {
             <AnimatedSection variant="fadeLeft">
               <div className="flex items-center gap-5 mb-8">
                 <div className="w-14 h-14 rounded-2xl overflow-hidden ring-1 ring-white/10">
-                  <img src={profileImg} alt="Mohamed Ezzat" loading="lazy" className="w-full h-full object-cover" />
+                  <img src={profileImg} alt="Mohamed Ezzat" loading="lazy" width={56} height={56} className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-white">
