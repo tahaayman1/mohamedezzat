@@ -2,11 +2,11 @@ import { HiGlobeAlt } from 'react-icons/hi';
 import SectionTitle from '../components/SectionTitle';
 import AnimatedSection from '../components/AnimatedSection';
 
-export default function Languages({ data = [] }) {
+export default function Languages({ data = [], titles = {} }) {
   return (
     <section id="languages" className="relative py-28 md:py-40 px-5 sm:px-8">
       <div className="max-w-5xl mx-auto">
-        <SectionTitle subtitle="Communication" title="Languages" />
+        <SectionTitle subtitle={titles.subtitle || "Communication"} title={titles.title || "Languages"} />
 
         <div className="grid sm:grid-cols-3 gap-5 max-w-3xl">
           {data.map((lang, index) => (

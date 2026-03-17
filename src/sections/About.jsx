@@ -11,13 +11,13 @@ const highlights = [
   { label: 'Certifications', value: '7+ Professional' },
 ];
 
-export default function About({ data }) {
+export default function About({ data, titles = {} }) {
   const profileImg = (data?.photo_id && getFilePreviewUrl(data.photo_id)) || profileImgFallback;
 
   return (
     <section id="about" className="relative py-28 md:py-40 px-5 sm:px-8">
       <div className="max-w-5xl mx-auto">
-        <SectionTitle subtitle="Get to know me" title="About Me" />
+        <SectionTitle subtitle={titles.subtitle || "Get to know me"} title={titles.title || "About Me"} />
 
         <div className="grid lg:grid-cols-12 gap-14 lg:gap-20 items-start">
           <div className="lg:col-span-7">

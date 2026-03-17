@@ -192,6 +192,95 @@ export function useFileUpload() {
   return { uploadFile, getFilePreview, getFileDownload, deleteFile };
 }
 
+export function useSectionTitles() {
+  const [data, setData] = useState(DEFAULT_DATA.sectionTitles);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchData = useCallback(async () => {
+    if (!isAppwriteConfigured()) {
+      setData(DEFAULT_DATA.sectionTitles);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await databases.listDocuments(
+        DATABASE_ID,
+        COLLECTIONS.SECTION_TITLES
+      );
+      if (response.documents.length > 0) {
+        const titlesMap = { ...DEFAULT_DATA.sectionTitles };
+        response.documents.forEach((doc) => {
+          if (doc.section_key) {
+            titlesMap[doc.section_key] = {
+              title: doc.title || '',
+              subtitle: doc.subtitle || '',
+              ...(doc.tagline ? { tagline: doc.tagline } : {}),
+              $id: doc.$id,
+            };
+          }
+        });
+        setData(titlesMap);
+      }
+    } catch (err) {
+      console.warn('Failed to fetch section titles, using defaults:', err.message);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return { data, loading, error, refetch: fetchData };
+}
+
+export function useSectionTitlesCRUD() {
+  const createOrUpdate = async (sectionKey, titleData) => {
+    try {
+      // Try to find existing document for this section_key
+      const response = await databases.listDocuments(
+        DATABASE_ID,
+        COLLECTIONS.SECTION_TITLES,
+        [Query.equal('section_key', sectionKey)]
+      );
+
+      const docData = {
+        section_key: sectionKey,
+        title: titleData.title || '',
+        subtitle: titleData.subtitle || '',
+        ...(titleData.tagline !== undefined ? { tagline: titleData.tagline } : {}),
+      };
+
+      let result;
+      if (response.documents.length > 0) {
+        result = await databases.updateDocument(
+          DATABASE_ID,
+          COLLECTIONS.SECTION_TITLES,
+          response.documents[0].$id,
+          docData
+        );
+      } else {
+        result = await databases.createDocument(
+          DATABASE_ID,
+          COLLECTIONS.SECTION_TITLES,
+          ID.unique(),
+          docData
+        );
+      }
+      return { success: true, data: result };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  };
+
+  return { createOrUpdate };
+}
+
 export function useSubmitMessage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);

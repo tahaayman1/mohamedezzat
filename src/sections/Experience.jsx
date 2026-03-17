@@ -2,11 +2,11 @@ import { HiCalendar } from 'react-icons/hi';
 import SectionTitle from '../components/SectionTitle';
 import AnimatedSection from '../components/AnimatedSection';
 
-export default function Experience({ data = [] }) {
+export default function Experience({ data = [], titles = {} }) {
   return (
     <section id="experience" className="relative py-28 md:py-40 px-5 sm:px-8">
       <div className="max-w-5xl mx-auto">
-        <SectionTitle subtitle="Professional Path" title="Experience" />
+        <SectionTitle subtitle={titles.subtitle || "Professional Path"} title={titles.title || "Experience"} />
 
         <div className="space-y-5 max-w-4xl">
           {data.map((exp, index) => (

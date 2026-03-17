@@ -5,13 +5,14 @@ import {
   HiHome, HiUser, HiAcademicCap, HiBriefcase, HiBadgeCheck,
   HiSparkles, HiGlobeAlt, HiLogout, HiPlus, HiPencil, HiTrash,
   HiSave, HiX, HiMenuAlt2, HiPhotograph, HiDocumentText, HiMail,
-  HiEye, HiEyeOff, HiExclamationCircle,
+  HiEye, HiEyeOff, HiExclamationCircle, HiTag,
 } from 'react-icons/hi';
 import { useAuth } from '../context/AuthContext';
-import { usePersonalInfo, useCollection, useAdminCRUD, useFileUpload, useMessages, getFilePreviewUrl } from '../hooks/useAppwrite';
+import { usePersonalInfo, useCollection, useAdminCRUD, useFileUpload, useMessages, useSectionTitles, useSectionTitlesCRUD, getFilePreviewUrl } from '../hooks/useAppwrite';
 
 const sidebarItems = [
   { id: 'personal', label: 'Personal Info', icon: HiUser },
+  { id: 'section-titles', label: 'Section Titles', icon: HiTag },
   { id: 'education', label: 'Education', icon: HiAcademicCap },
   { id: 'experiences', label: 'Experiences', icon: HiBriefcase },
   { id: 'certificates', label: 'Certificates', icon: HiBadgeCheck },
@@ -143,6 +144,7 @@ export default function AdminDashboard() {
               transition={{ duration: 0.3 }}
             >
               {activeTab === 'personal' && <PersonalInfoEditor />}
+              {activeTab === 'section-titles' && <SectionTitlesEditor />}
               {activeTab === 'education' && <CollectionEditor collectionKey="EDUCATION" fields={educationFields} />}
               {activeTab === 'experiences' && <CollectionEditor collectionKey="EXPERIENCES" fields={experienceFields} />}
               {activeTab === 'certificates' && <CollectionEditor collectionKey="CERTIFICATES" fields={certificateFields} />}
@@ -265,6 +267,7 @@ function PersonalInfoEditor() {
       <div className="admin-card space-y-5">
         <h3 className="text-lg font-semibold text-white mb-4">Edit Personal Information</h3>
 
+
         <div className="grid sm:grid-cols-2 gap-5">
           <div>
             <label className="admin-label">Full Name</label>
@@ -367,6 +370,175 @@ function PersonalInfoEditor() {
           <HiSave size={18} />
           {saving ? 'Saving...' : 'Save Changes'}
         </button>
+      </div>
+    </div>
+  );
+}
+
+const SECTION_TITLE_CONFIGS = [
+  { key: 'hero', label: 'Hero Section', hasTagline: true, description: 'The main landing section with your name and badge' },
+  { key: 'about', label: 'About Section', description: 'The "About Me" section' },
+  { key: 'experience', label: 'Experience Section', description: 'Work experience section' },
+  { key: 'education', label: 'Education Section', description: 'Academic background section' },
+  { key: 'certificates', label: 'Certificates Section', description: 'Certificates & courses section' },
+  { key: 'skills', label: 'Skills Section', description: 'Skills section' },
+  { key: 'languages', label: 'Languages Section', description: 'Languages section' },
+  { key: 'contact', label: 'Contact Section', description: 'Contact form section' },
+];
+
+function SectionTitlesEditor() {
+  const { data: titles, loading, refetch } = useSectionTitles();
+  const { createOrUpdate } = useSectionTitlesCRUD();
+  const [form, setForm] = useState({});
+  const [saving, setSaving] = useState(null);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (titles) {
+      const formData = {};
+      SECTION_TITLE_CONFIGS.forEach(({ key, hasTagline }) => {
+        formData[key] = {
+          title: titles[key]?.title || '',
+          subtitle: titles[key]?.subtitle || '',
+          ...(hasTagline ? { tagline: titles[key]?.tagline || '' } : {}),
+        };
+      });
+      setForm(formData);
+    }
+  }, [titles]);
+
+  const handleFieldChange = (sectionKey, field, value) => {
+    setForm((prev) => ({
+      ...prev,
+      [sectionKey]: {
+        ...prev[sectionKey],
+        [field]: value,
+      },
+    }));
+  };
+
+  const handleSaveSection = async (sectionKey) => {
+    setSaving(sectionKey);
+    setMessage('');
+
+    const result = await createOrUpdate(sectionKey, form[sectionKey]);
+    if (result.success) {
+      setMessage(`${sectionKey} titles saved successfully!`);
+      refetch();
+    } else {
+      setMessage(`Error saving ${sectionKey}: ${result.error}`);
+    }
+    setSaving(null);
+    setTimeout(() => setMessage(''), 3000);
+  };
+
+  const handleSaveAll = async () => {
+    setSaving('all');
+    setMessage('');
+    let hasError = false;
+
+    for (const { key } of SECTION_TITLE_CONFIGS) {
+      const result = await createOrUpdate(key, form[key]);
+      if (!result.success) {
+        setMessage(`Error saving ${key}: ${result.error}`);
+        hasError = true;
+        break;
+      }
+    }
+
+    if (!hasError) {
+      setMessage('All section titles saved successfully!');
+      refetch();
+    }
+    setSaving(null);
+    setTimeout(() => setMessage(''), 4000);
+  };
+
+  if (loading) return <LoadingState />;
+
+  return (
+    <div className="max-w-3xl space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-dark-300 text-sm">Edit the titles and subtitles for each section of your portfolio.</p>
+        </div>
+        <button
+          onClick={handleSaveAll}
+          disabled={saving !== null}
+          className="admin-btn flex items-center gap-2 text-sm"
+        >
+          <HiSave size={16} />
+          {saving === 'all' ? 'Saving All...' : 'Save All'}
+        </button>
+      </div>
+
+      {message && (
+        <div className={`p-3 rounded-lg text-sm ${
+          message.startsWith('Error')
+            ? 'bg-red-500/10 text-red-400 border border-red-500/30'
+            : 'bg-green-500/10 text-green-400 border border-green-500/30'
+        }`}>
+          {message}
+        </div>
+      )}
+
+      <div className="space-y-4">
+        {SECTION_TITLE_CONFIGS.map(({ key, label, hasTagline, description }) => (
+          <div key={key} className="admin-card">
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div>
+                <h4 className="text-white font-semibold text-sm">{label}</h4>
+                <p className="text-dark-400 text-xs mt-0.5">{description}</p>
+              </div>
+              <button
+                onClick={() => handleSaveSection(key)}
+                disabled={saving !== null}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary-400/10 text-primary-400 hover:bg-primary-400/20 transition-all disabled:opacity-50"
+              >
+                <HiSave size={14} />
+                {saving === key ? 'Saving...' : 'Save'}
+              </button>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              {key !== 'hero' && (
+                <div>
+                  <label className="admin-label">Title</label>
+                  <input
+                    type="text"
+                    value={form[key]?.title || ''}
+                    onChange={(e) => handleFieldChange(key, 'title', e.target.value)}
+                    className="admin-input"
+                    placeholder="Section title"
+                  />
+                </div>
+              )}
+              <div>
+                <label className="admin-label">{key === 'hero' ? 'Badge Text' : 'Subtitle'}</label>
+                <input
+                  type="text"
+                  value={form[key]?.subtitle || ''}
+                  onChange={(e) => handleFieldChange(key, 'subtitle', e.target.value)}
+                  className="admin-input"
+                  placeholder={key === 'hero' ? 'Badge text shown above name' : 'Section subtitle'}
+                />
+              </div>
+            </div>
+
+            {hasTagline && (
+              <div className="mt-4">
+                <label className="admin-label">Tagline</label>
+                <input
+                  type="text"
+                  value={form[key]?.tagline || ''}
+                  onChange={(e) => handleFieldChange(key, 'tagline', e.target.value)}
+                  className="admin-input"
+                  placeholder="Short description below your name"
+                />
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

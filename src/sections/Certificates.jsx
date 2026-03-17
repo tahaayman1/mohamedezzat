@@ -2,11 +2,11 @@ import { HiOfficeBuilding } from 'react-icons/hi';
 import SectionTitle from '../components/SectionTitle';
 import AnimatedSection from '../components/AnimatedSection';
 
-export default function Certificates({ data = [] }) {
+export default function Certificates({ data = [], titles = {} }) {
   return (
     <section id="certificates" className="relative py-28 md:py-40 px-5 sm:px-8">
       <div className="max-w-5xl mx-auto">
-        <SectionTitle subtitle="Continuous Learning" title="Certificates & Courses" />
+        <SectionTitle subtitle={titles.subtitle || "Continuous Learning"} title={titles.title || "Certificates & Courses"} />
 
         <div className="grid sm:grid-cols-2 gap-5">
           {data.map((cert, index) => (

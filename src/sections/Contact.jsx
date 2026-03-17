@@ -8,7 +8,7 @@ import { useSubmitMessage } from '../hooks/useAppwrite';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/mohamad-ezzat-16754b28a/';
 
-export default function Contact({ data }) {
+export default function Contact({ data, titles = {} }) {
   const email = data?.email || 'ezzatm768@gmail.com';
   const phone = data?.phone || '+201507623769';
   const { submitMessage, submitting, success, error, reset } = useSubmitMessage();
@@ -63,7 +63,7 @@ export default function Contact({ data }) {
   return (
     <section id="contact" className="relative py-28 md:py-40 px-5 sm:px-8">
       <div className="max-w-5xl mx-auto">
-        <SectionTitle subtitle="Let's Connect" title="Get In Touch" />
+        <SectionTitle subtitle={titles.subtitle || "Let's Connect"} title={titles.title || "Get In Touch"} />
 
         <div className="grid lg:grid-cols-2 gap-14 max-w-5xl">
           <div>

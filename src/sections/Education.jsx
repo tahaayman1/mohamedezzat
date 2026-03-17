@@ -2,11 +2,11 @@ import { HiAcademicCap } from 'react-icons/hi';
 import SectionTitle from '../components/SectionTitle';
 import AnimatedSection from '../components/AnimatedSection';
 
-export default function Education({ data = [] }) {
+export default function Education({ data = [], titles = {} }) {
   return (
     <section id="education" className="relative py-28 md:py-40 px-5 sm:px-8">
       <div className="max-w-5xl mx-auto">
-        <SectionTitle subtitle="Academic Journey" title="Education" />
+        <SectionTitle subtitle={titles.subtitle || "Academic Journey"} title={titles.title || "Education"} />
 
         <div className="max-w-3xl">
           {data.map((edu, index) => (

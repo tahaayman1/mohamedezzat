@@ -9,6 +9,7 @@ export const COLLECTIONS = {
   SKILLS: import.meta.env.VITE_APPWRITE_COLLECTION_SKILLS || 'skills',
   LANGUAGES: import.meta.env.VITE_APPWRITE_COLLECTION_LANGUAGES || 'languages',
   MESSAGES: import.meta.env.VITE_APPWRITE_COLLECTION_MESSAGES || 'messages',
+  SECTION_TITLES: import.meta.env.VITE_APPWRITE_COLLECTION_SECTION_TITLES || 'section_titles',
 };
 
 export const DEFAULT_DATA = {
@@ -64,4 +65,14 @@ export const DEFAULT_DATA = {
     { $id: '2', name: 'English', proficiency: 'Professional', level: 80, order: 1 },
     { $id: '3', name: 'Japanese', proficiency: 'Beginner', level: 25, order: 2 },
   ],
+  sectionTitles: {
+    hero: { title: '', subtitle: 'Business Development Consultant', tagline: 'Helping businesses grow through strategic development and digital innovation.' },
+    about: { title: 'About Me', subtitle: 'Get to know me' },
+    experience: { title: 'Experience', subtitle: 'Professional Path' },
+    education: { title: 'Education', subtitle: 'Academic Journey' },
+    certificates: { title: 'Certificates & Courses', subtitle: 'Continuous Learning' },
+    skills: { title: 'Skills', subtitle: 'What I Excel At' },
+    languages: { title: 'Languages', subtitle: 'Communication' },
+    contact: { title: 'Get In Touch', subtitle: "Let's Connect" },
+  },
 };
