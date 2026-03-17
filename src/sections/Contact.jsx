@@ -263,24 +263,24 @@ export default function Contact({ data }) {
               href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full border border-white/10 bg-white/[0.03] flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/25 transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-white/10 bg-white/[0.03] flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/25 transition-all duration-300"
               aria-label="LinkedIn"
             >
-              <FaLinkedinIn size={14} />
+              <FaLinkedinIn size={16} />
             </a>
             <a
               href={`mailto:${email}`}
-              className="w-9 h-9 rounded-full border border-white/10 bg-white/[0.03] flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/25 transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-white/10 bg-white/[0.03] flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/25 transition-all duration-300"
               aria-label="Email"
             >
-              <HiMail size={15} />
+              <HiMail size={17} />
             </a>
             <a
               href={`tel:${phone}`}
-              className="w-9 h-9 rounded-full border border-white/10 bg-white/[0.03] flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/25 transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-white/10 bg-white/[0.03] flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 hover:border-white/25 transition-all duration-300"
               aria-label="Phone"
             >
-              <HiPhone size={14} />
+              <HiPhone size={16} />
             </a>
           </div>
 

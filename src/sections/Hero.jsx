@@ -66,7 +66,7 @@ export default function Hero({ data }) {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mb-5 lg:mb-5"
           >
-            <span className="inline-block px-5 py-2 rounded-full text-[11px] font-semibold tracking-[0.18em] uppercase text-white/50 border border-white/10 bg-white/[0.03]">
+            <span className="inline-block px-5 py-2 rounded-full text-xs font-semibold tracking-[0.18em] uppercase text-white/50 border border-white/10 bg-white/[0.03]">
               Business Development Consultant
             </span>
           </motion.div>
@@ -132,7 +132,7 @@ export default function Hero({ data }) {
         onClick={scrollToAbout}
         className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 cursor-pointer group"
       >
-        <span className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/40 group-hover:text-white/60 transition-colors duration-300">
+        <span className="text-xs font-medium tracking-[0.2em] uppercase text-white/40 group-hover:text-white/60 transition-colors duration-300">
           Scroll
         </span>
         <motion.div

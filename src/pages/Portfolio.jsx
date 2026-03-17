@@ -34,26 +34,40 @@ export default function Portfolio() {
           <main key="content">
             <Hero data={personalInfo} />
 
-            <div className="section-divider" />
-            <About data={personalInfo} />
+            <div className="section-below-fold">
+              <div className="section-divider" />
+              <About data={personalInfo} />
+            </div>
 
-            <div className="section-divider" />
-            <Experience data={experiences} />
+            <div className="section-below-fold">
+              <div className="section-divider" />
+              <Experience data={experiences} />
+            </div>
 
-            <div className="section-divider" />
-            <Education data={education} />
+            <div className="section-below-fold">
+              <div className="section-divider" />
+              <Education data={education} />
+            </div>
 
-            <div className="section-divider" />
-            <Certificates data={certificates} />
+            <div className="section-below-fold">
+              <div className="section-divider" />
+              <Certificates data={certificates} />
+            </div>
 
-            <div className="section-divider" />
-            <Skills data={skills} />
+            <div className="section-below-fold">
+              <div className="section-divider" />
+              <Skills data={skills} />
+            </div>
 
-            <div className="section-divider" />
-            <Languages data={languages} />
+            <div className="section-below-fold">
+              <div className="section-divider" />
+              <Languages data={languages} />
+            </div>
 
-            <div className="section-divider" />
-            <Contact data={personalInfo} />
+            <div className="section-below-fold">
+              <div className="section-divider" />
+              <Contact data={personalInfo} />
+            </div>
           </main>
         )}
       </AnimatePresence>

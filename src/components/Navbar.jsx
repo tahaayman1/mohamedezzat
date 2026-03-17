@@ -64,7 +64,7 @@ export default function Navbar() {
         className="fixed top-5 left-0 right-0 z-50 flex justify-center px-4"
       >
         <nav
-          className={`rounded-full px-2 transition-all duration-500 border backdrop-blur-[24px] ${
+          className={`glass-nav rounded-full px-2 transition-all duration-500 border ${
             scrolled
               ? 'py-1 bg-white/[0.07] border-white/[0.12] shadow-lg shadow-black/40 backdrop-saturate-[1.8]'
               : 'py-1.5 bg-white/[0.04] border-white/[0.07] backdrop-saturate-[1.4]'
@@ -129,7 +129,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center gap-6 md:hidden"
+            className="fixed inset-0 z-40 bg-black/95 flex flex-col items-center justify-center gap-6 md:hidden"
           >
             {navLinks.map((link, i) => (
               <motion.a
