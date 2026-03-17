@@ -31,3 +31,5 @@ Mohamed ezzat cv.pdf
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
