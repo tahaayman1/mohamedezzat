@@ -4,6 +4,9 @@
   "description": "Appwrite function to send Telegram notifications for new portfolio messages",
   "main": "src/main.js",
   "type": "module",
+  "dependencies": {
+    "node-appwrite": "^13.0.0"
+  },
   "keywords": ["appwrite", "telegram", "notification"],
   "license": "MIT"
 }

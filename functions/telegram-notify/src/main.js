@@ -1,9 +1,19 @@
+import { Client, Databases, Query } from 'node-appwrite';
+
+const DATABASE_ID = 'portfolio_db';
+const SUBSCRIBERS_COLLECTION = 'telegram_subscribers';
+
 export default async ({ req, res, log, error }) => {
-  const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } = process.env;
+  const { 
+    TELEGRAM_BOT_TOKEN,
+    APPWRITE_FUNCTION_API_KEY,
+    APPWRITE_ENDPOINT = 'https://nyc.cloud.appwrite.io/v1',
+    APPWRITE_PROJECT_ID = '69b8ea57002921f86d3f'
+  } = process.env;
 
   // Validate environment variables
-  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-    error('Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID environment variables');
+  if (!TELEGRAM_BOT_TOKEN) {
+    error('Missing TELEGRAM_BOT_TOKEN environment variable');
     return res.json({ success: false, error: 'Missing configuration' }, 500);
   }
 
@@ -12,7 +22,6 @@ export default async ({ req, res, log, error }) => {
     let messageData;
     
     if (req.body) {
-      // If triggered by event, the body contains the document
       messageData = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     }
 
@@ -22,6 +31,28 @@ export default async ({ req, res, log, error }) => {
     }
 
     log(`Processing message from: ${messageData.name}`);
+
+    // Initialize Appwrite client to fetch subscribers
+    const client = new Client()
+      .setEndpoint(APPWRITE_ENDPOINT)
+      .setProject(APPWRITE_PROJECT_ID)
+      .setKey(APPWRITE_FUNCTION_API_KEY);
+
+    const databases = new Databases(client);
+
+    // Fetch all active subscribers
+    const subscribers = await databases.listDocuments(
+      DATABASE_ID,
+      SUBSCRIBERS_COLLECTION,
+      [Query.equal('active', true)]
+    );
+
+    if (subscribers.documents.length === 0) {
+      log('No active subscribers found');
+      return res.json({ success: true, message: 'No subscribers to notify' });
+    }
+
+    log(`Found ${subscribers.documents.length} active subscribers`);
 
     // Format the Telegram message - Professional Arabic style
     const text = 
@@ -40,35 +71,51 @@ ${escapeMarkdown(messageData.message)}
 تم الاستلام: ${formatDate(messageData.createdAt)}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
-    // Send to Telegram
-    const telegramResponse = await fetch(
-      `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text,
-          parse_mode: 'Markdown',
-        }),
-      }
+    // Send to all active subscribers
+    const results = await Promise.allSettled(
+      subscribers.documents.map(subscriber => 
+        sendTelegramMessage(subscriber.chat_id, text, TELEGRAM_BOT_TOKEN)
+      )
     );
 
-    const telegramResult = await telegramResponse.json();
+    // Count successes and failures
+    const successful = results.filter(r => r.status === 'fulfilled').length;
+    const failed = results.filter(r => r.status === 'rejected').length;
 
-    if (!telegramResult.ok) {
-      error(`Telegram API error: ${JSON.stringify(telegramResult)}`);
-      return res.json({ success: false, error: telegramResult.description }, 500);
-    }
+    log(`Notifications sent: ${successful} successful, ${failed} failed`);
 
-    log('Telegram notification sent successfully');
-    return res.json({ success: true, message: 'Notification sent' });
+    return res.json({ 
+      success: true, 
+      message: `Notified ${successful} subscribers`,
+      stats: { successful, failed }
+    });
 
   } catch (err) {
-    error(`Error sending notification: ${err.message}`);
+    error(`Error sending notifications: ${err.message}`);
     return res.json({ success: false, error: err.message }, 500);
   }
 };
+
+async function sendTelegramMessage(chatId, text, botToken) {
+  const response = await fetch(
+    `https://api.telegram.org/bot${botToken}/sendMessage`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: 'Markdown',
+      }),
+    }
+  );
+  
+  const result = await response.json();
+  if (!result.ok) {
+    throw new Error(result.description || 'Failed to send message');
+  }
+  return result;
+}
 
 // Escape special Markdown characters to prevent formatting issues
 function escapeMarkdown(text) {
