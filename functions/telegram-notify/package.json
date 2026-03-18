@@ -1,0 +1,9 @@
+{
+  "name": "telegram-notify",
+  "version": "1.0.0",
+  "description": "Appwrite function to send Telegram notifications for new portfolio messages",
+  "main": "src/main.js",
+  "type": "module",
+  "keywords": ["appwrite", "telegram", "notification"],
+  "license": "MIT"
+}
